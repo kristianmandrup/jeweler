@@ -1,5 +1,6 @@
 class Jeweler
   module Commands
+    autoload :BuildGem, 'jeweler/commands/executor'
     autoload :BuildGem, 'jeweler/commands/build_gem'
     autoload :InstallGem, 'jeweler/commands/install_gem'
     autoload :CheckDependencies, 'jeweler/commands/check_dependencies'

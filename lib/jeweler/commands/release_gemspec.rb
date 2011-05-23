@@ -15,7 +15,7 @@ class Jeweler
 
       def run
         unless clean_staging_area?
-          system "git status"
+          system_exec "git status"
           raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
         end
 
@@ -24,7 +24,7 @@ class Jeweler
         regenerate_gemspec!
         commit_gemspec! if gemspec_changed?
 
-        output.puts "Pushing master to origin"
+        print "Pushing master to origin"
         repo.push
       end
 
@@ -36,7 +36,7 @@ class Jeweler
       def commit_gemspec!
         gemspec_gitpath = working_subdir.join(gemspec_helper.path)
         repo.add(gemspec_gitpath.to_s)
-        output.puts "Committing #{gemspec_gitpath}"
+        print "Committing #{gemspec_gitpath}"
         repo.commit "Regenerate gemspec for version #{version}"
       end
 
@@ -47,7 +47,7 @@ class Jeweler
 
       def gemspec_changed?
         # OMGHAX. ruby-git status always ends up being 'M', so let's do it a crazy way
-        system "git status -s #{working_subdir.join(gemspec_helper.path)} | grep  #{working_subdir.join(gemspec_helper.path)} > /dev/null 2>/dev/null"
+        system_exec "git status -s #{working_subdir.join(gemspec_helper.path)} | grep  #{working_subdir.join(gemspec_helper.path)} > /dev/null 2>/dev/null"
       end
 
       def gemspec_helper

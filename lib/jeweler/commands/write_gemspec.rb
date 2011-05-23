@@ -1,10 +1,10 @@
 class Jeweler
   module Commands
-    class WriteGemspec
-      attr_accessor :base_dir, :gemspec, :version, :output, :gemspec_helper, :version_helper
+    class WriteGemspec < Executor
+      attr_accessor :base_dir, :gemspec, :version, :gemspec_helper, :version_helper
 
       def initialize
-        self.output = $stdout
+        super
       end
 
       def run
@@ -15,7 +15,7 @@ class Jeweler
 
         gemspec_helper.write
 
-        output.puts "Generated: #{gemspec_helper.path}"  
+        print "Generated: #{gemspec_helper.path}"  
       end
 
       def gemspec_helper

@@ -1,16 +1,14 @@
 class Jeweler
   module Commands
-    class ReleaseToRubygems
+    class ReleaseToRubygems < Executor
       attr_accessor :gemspec, :version, :output, :gemspec_helper
 
       def initialize
-        self.output = $stdout
+        super
       end
 
       def run
-        command = "gem push #{@gemspec_helper.gem_path}"
-        output.puts "Executing #{command.inspect}:"
-        sh command
+        system_exec "gem push #{@gemspec_helper.gem_path}"
       end
 
       def self.build_for(jeweler)

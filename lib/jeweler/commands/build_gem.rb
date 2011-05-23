@@ -1,9 +1,10 @@
 class Jeweler
   module Commands
-    class BuildGem
+    class BuildGem < Executor
       attr_accessor :base_dir, :gemspec_helper, :file_utils, :version_helper
 
       def initialize
+        super
         self.file_utils = FileUtils
       end
 
@@ -24,11 +25,9 @@ class Jeweler
 
       def self.build_for(jeweler)
         command = new
-
         command.base_dir = jeweler.base_dir
         command.gemspec_helper = jeweler.gemspec_helper
         command.version_helper = jeweler.version_helper
-
         command
       end
     end

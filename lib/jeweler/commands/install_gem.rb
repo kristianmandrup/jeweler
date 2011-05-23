@@ -1,17 +1,14 @@
 class Jeweler
   module Commands
-    class InstallGem
-      attr_accessor :gemspec_helper, :output
+    class InstallGem < Executor
+      attr_accessor :gemspec_helper
 
       def initialize
-        self.output = $stdout
+        super
       end
 
       def run
-        command = "#{gem_command} install #{gemspec_helper.gem_path}"
-        output.puts "Executing #{command.inspect}:"
-
-        sh command # TODO where does sh actually come from!? - rake, apparently
+        system_exec  "#{gem_command} install #{gemspec_helper.gem_path}"
       end
 
       def gem_command

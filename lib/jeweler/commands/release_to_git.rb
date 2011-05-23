@@ -4,7 +4,7 @@ class Jeweler
       attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
 
       def initialize(attributes = {})
-        self.output = $stdout
+        super
 
         attributes.each_pair do |key, value|
           send("#{key}=", value)
@@ -13,7 +13,7 @@ class Jeweler
 
       def run
         unless clean_staging_area?
-          system "git status"
+          system_exec "git status"
           raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
         end
 
